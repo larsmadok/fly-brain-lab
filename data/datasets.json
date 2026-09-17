@@ -1,0 +1,8 @@
+{
+  "datasets": [
+    {"id":"synthetic-96","label":"Synthetic SNN","kind":"synthetic","neurons":96,"status":"ready","purpose":"control and UI validation"},
+    {"id":"fafb-783","label":"FlyWire FAFB v783","kind":"connectome","organism":"Drosophila melanogaster","sex":"female","scope":"adult brain","neurons":139255,"status":"importer-next","source":"Codex / FlyWire","notes":"Primary scientific baseline. Keep raw exports outside Git; import compact graph + annotations."},
+    {"id":"banc-888","label":"BANC v888","kind":"connectome","organism":"Drosophila melanogaster","sex":"female","scope":"adult brain + nerve cord","neurons":158262,"status":"planned","source":"Codex","notes":"Useful later for body/motor closed-loop experiments."},
+    {"id":"mcns-09","label":"MCNS v0.9","kind":"connectome","organism":"Drosophila melanogaster","sex":"male","scope":"adult CNS","neurons":166694,"status":"planned","source":"Codex","notes":"Independent CNS dataset for cross-dataset experiments."}
+  ]
+}
