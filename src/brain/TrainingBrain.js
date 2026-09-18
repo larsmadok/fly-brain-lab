@@ -33,13 +33,13 @@ export class TrainingBrain {
       const input=new Map();
       for(const [i,v] of this.fafb.stimulateHero('LC4',gain))input.set(i,v);
       for(const [i,v] of this.fafb.stimulateHero('LPLC2',gain))input.set(i,(input.get(i)||0)+v);
-      const t0=performance.now();let total=0,peak=0,dnPeak=0,aPeak=0,bPeak=0;
+      const t0=performance.now();let total=0,peak=0,dnPeak=0,aPeak=0,bPeak=0,vpPeak=0,descPeak=0;
       for(let k=0;k<steps;k++){
         const sp=this.fafb.step(k===0?input:new Map());total+=sp.length;peak=Math.max(peak,sp.length);
         const a=this.fafb.spikeCount('DNa01'),b=this.fafb.spikeCount('DNa02');
-        aPeak=Math.max(aPeak,a);bPeak=Math.max(bPeak,b);dnPeak=Math.max(dnPeak,a+b);
+        aPeak=Math.max(aPeak,a);bPeak=Math.max(bPeak,b);dnPeak=Math.max(dnPeak,a+b);vpPeak=Math.max(vpPeak,this.fafb.populationSpikeCount('visual_projection'));descPeak=Math.max(descPeak,this.fafb.populationSpikeCount('descending'));
       }
-      rows.push({steps,gain,total,peak,dNa01:aPeak,dNa02:bPeak,dnPeak,runtimeMs:performance.now()-t0});
+      rows.push({steps,gain,total,peak,visualProjection:vpPeak,descending:descPeak,dNa01:aPeak,dNa02:bPeak,dnPeak,runtimeMs:performance.now()-t0});
     }
     return rows;
   }
