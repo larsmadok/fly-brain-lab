@@ -1,0 +1,8 @@
+{
+  "dataset":"FlyWire FAFB v783",
+  "neurons":139255,
+  "mode":"external-dataset",
+  "runtimeReady":false,
+  "required":["neuron metadata","weighted connectivity","neurotransmitter/sign mapping","sensory neuron mapping","descending neuron mapping"],
+  "note":"Manifest only. The UI must not label FAFB as active until runtimeReady is true."
+}
