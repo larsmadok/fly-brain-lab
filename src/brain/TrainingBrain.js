@@ -18,7 +18,7 @@ export class TrainingBrain {
     const input=new Map(),lplcAmp=front>0?4+8*front:0,lc4Amp=(left>0||right>0)?3+6*Math.max(left,right):0;
     const add=(type,amp)=>{for(const [i,v] of this.fafb.stimulateHero(type,amp))input.set(i,(input.get(i)||0)+v)};
     if(lplcAmp)add('LPLC2',lplcAmp);if(lc4Amp)add('LC4',lc4Amp);
-    let total=0;for(let k=0;k<6;k++)total+=this.fafb.step(k===0?input:new Map()).length;
+    let total=0;for(let k=0;k<18;k++)total+=this.fafb.step(k===0?input:new Map()).length;
     const a=this.fafb.spikeCount('DNa01'),b=this.fafb.spikeCount('DNa02');
     let action='forward';if(a>b)action='left';else if(b>a)action='right';
     this.last={action,dNa01:a,dNa02:b,totalSpikes:total,inputLC4:lc4Amp,inputLPLC2:lplcAmp,runtimeMs:performance.now()-t0};
