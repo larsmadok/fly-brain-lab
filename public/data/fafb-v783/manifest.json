@@ -1,0 +1,9 @@
+{
+  "dataset": "FAFB",
+  "release": "v783",
+  "neurons": 139255,
+  "edges": 5342446,
+  "synapses": 50666648,
+  "graph": "https://github.com/larsmadok/fly-brain-lab/releases/download/fafb-v783-runtime/graph.bin",
+  "format": "FBL1"
+}
