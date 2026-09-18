@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node tools/fetch_fafb_assets.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
