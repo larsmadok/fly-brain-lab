@@ -29,6 +29,6 @@ export class TrainingBrain {
   snapshot(){
     if(this.synthetic)return{...this.synthetic.snapshot(),mode:this.mode,status:'ready'};
     const info=this.fafb?.info()||{};
-    return{mode:this.mode,status:this.status,neurons:139255,plastic:this.mode==='fafbPlastic',runtime:info.runtime||null,io:info.io||null,error:info.error||null,last:this.last,message:this.status==='ready'?'FAFB v783 closed-loop runtime loaded':'Loading verified FAFB runtime assets'};
+    return{mode:this.mode,status:this.status,neurons:139255,plastic:this.mode==='fafbPlastic',runtime:info.runtime||null,io:info.io||null,error:info.error||null,last:this.last,message:this.status==='ready'?'FAFB v783 closed-loop runtime loaded':this.status==='error'?`LOAD ERROR: ${info.error||'unknown runtime error'}`:'Loading verified FAFB runtime assets'};
   }
 }
