@@ -1,6 +1,6 @@
 import { CsrLifRuntime } from './CsrLifRuntime.js';
 
-const RELEASE='https://github.com/larsmadok/fly-brain-lab/releases/download/fafb-v783-runtime';
+const RELEASE='/data/fafb-v783/runtime';
 
 export class FafbRuntime {
   constructor({plastic=false}={}){
