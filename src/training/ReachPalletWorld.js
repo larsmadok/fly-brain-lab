@@ -1,0 +1,9 @@
+// Training Lab Experiment 001: reach the pallet.
+// Environment exposes sensors and physics only. It never supplies the correct action.
+export class ReachPalletWorld{
+ constructor(seed=101){this.seed=seed;this.reset()}
+ reset(){this.t=0;this.agent={x:12,y:82,heading:-Math.PI/2,speed:0};this.target={x:76,y:18};this.done=false;this.crashed=false;this.reward=0;this.path=[[this.agent.x,this.agent.y]];return this.observe()}
+ observe(){const a=this.agent,t=this.target,dx=t.x-a.x,dy=t.y-a.y,dist=Math.hypot(dx,dy),angle=Math.atan2(dy,dx)-a.heading;const rel=Math.atan2(Math.sin(angle),Math.cos(angle));return{distance:Math.min(1,dist/120),bearing:rel/Math.PI,front:Math.max(0,Math.cos(rel))*(1-Math.min(1,dist/120)),left:Math.max(0,-Math.sin(rel)),right:Math.max(0,Math.sin(rel)),speed:a.speed,contact:dist<5?1:0}}
+ step(action){if(this.done||this.crashed)return this.state();this.t++;const a=this.agent;const before=Math.hypot(this.target.x-a.x,this.target.y-a.y);if(action==='left')a.heading-=.16;if(action==='right')a.heading+=.16;if(action==='forward')a.speed=Math.min(.85,a.speed+.16);if(action==='brake')a.speed=Math.max(0,a.speed-.3);if(action==='wait')a.speed*=.92;a.x+=Math.cos(a.heading)*a.speed;a.y+=Math.sin(a.heading)*a.speed;a.x=Math.max(2,Math.min(98,a.x));a.y=Math.max(2,Math.min(98,a.y));const after=Math.hypot(this.target.x-a.x,this.target.y-a.y);this.reward=(before-after)*.12-.002;if(after<4){this.done=true;this.reward+=10}this.path.push([a.x,a.y]);if(this.path.length>600)this.path.shift();return this.state()}
+ state(){return{t:this.t,agent:{...this.agent},target:{...this.target},done:this.done,reward:this.reward,path:[...this.path],sensors:this.observe()}}
+}
