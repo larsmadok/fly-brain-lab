@@ -37,6 +37,10 @@ export class FafbRuntime {
   stimulateHero(type,amplitude=8){
     const ids=this.denseIo?.hero_types?.[type]||[];const m=new Map();for(const i of ids)m.set(i,amplitude);return m;
   }
+  populationSpikeCount(group){
+    const ids=this.denseIo?.groups?.[group]||[];if(!ids.length||!this.lastSpikes.length)return 0;
+    const s=new Set(this.lastSpikes);let n=0;for(const i of ids)if(s.has(i))n++;return n;
+  }
   spikeCount(type){
     const ids=this.denseIo?.hero_types?.[type]||[];if(!ids.length||!this.lastSpikes.length)return 0;
     const s=new Set(this.lastSpikes);let n=0;for(const i of ids)if(s.has(i))n++;return n;
