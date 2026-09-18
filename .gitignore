@@ -6,3 +6,10 @@ data/cache/
 *.parquet
 *.feather
 *.bin
+public/data/fafb-v783/graph.bin
+public/data/fafb-v783/*.gz
+public/data/fafb-v783/*.csv
+public/data/fafb-v783/*.parquet
+.env
+.env.*
+!.env.example
