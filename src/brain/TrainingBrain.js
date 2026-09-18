@@ -24,6 +24,25 @@ export class TrainingBrain {
     this.last={action,dNa01:a,dNa02:b,totalSpikes:total,inputLC4:lc4Amp,inputLPLC2:lplcAmp,runtimeMs:performance.now()-t0};
     return action;
   }
+  autoCalibrate(){
+    if(!this.fafb?.ready)return[];
+    const stepsList=[6,12,24,48,96],gains=[4,8,16,32],rows=[];
+    for(const steps of stepsList)for(const gain of gains){
+      // Reset dynamic state for comparable sweeps while retaining immutable graph.
+      this.fafb.engine.v.fill(-52);this.fafb.engine.g.fill(0);this.fafb.lastSpikes=[];
+      const input=new Map();
+      for(const [i,v] of this.fafb.stimulateHero('LC4',gain))input.set(i,v);
+      for(const [i,v] of this.fafb.stimulateHero('LPLC2',gain))input.set(i,(input.get(i)||0)+v);
+      const t0=performance.now();let total=0,peak=0,dnPeak=0,aPeak=0,bPeak=0;
+      for(let k=0;k<steps;k++){
+        const sp=this.fafb.step(k===0?input:new Map());total+=sp.length;peak=Math.max(peak,sp.length);
+        const a=this.fafb.spikeCount('DNa01'),b=this.fafb.spikeCount('DNa02');
+        aPeak=Math.max(aPeak,a);bPeak=Math.max(bPeak,b);dnPeak=Math.max(dnPeak,a+b);
+      }
+      rows.push({steps,gain,total,peak,dNa01:aPeak,dNa02:bPeak,dnPeak,runtimeMs:performance.now()-t0});
+    }
+    return rows;
+  }
   learn(reward){if(this.synthetic)this.synthetic.learn(reward)}
   endTrial(success){if(this.synthetic)this.synthetic.endTrial(success)}
   snapshot(){
